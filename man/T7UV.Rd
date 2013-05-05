@@ -1,0 +1,15 @@
+\docType{data}
+\name{T7UV}
+\alias{T7UV}
+\title{Wind observations in the Pacific}
+\format{A data frame with 11323 rows and 2 variables}
+\description{
+  A dataset containing wind oobservations
+}
+\details{
+  \itemize{ \item u \item v }
+
+  No details.
+}
+\keyword{datasets}
+
