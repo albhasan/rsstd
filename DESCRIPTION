@@ -5,6 +5,6 @@ Version: 0.1.1
 Date: 2013-05-04
 Authors@R: c(person("Alber", "Sanchez", role = c("aut", "cre"),email = "albhasan@gmail.com"))
 Author: Alber Sanchez
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
+Maintainer: Alber Sanchez <albhasan@gmail.com>
+Description: R scripts for the figures and examples from the book STATISTICS FOR SPATIO-TEMPORAL DATA by Cressie and Wikle 2011.
 License: file LICENCE
