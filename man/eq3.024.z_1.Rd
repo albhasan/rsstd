@@ -1,0 +1,18 @@
+\name{eq3.024.z_1}
+\alias{eq3.024.z_1}
+\title{z1 for the case 1 of the general solution of the second-order system}
+\usage{
+  eq3.024.z_1(z_1, phi)
+}
+\arguments{
+  \item{z_1}{z_1}
+
+  \item{phi}{phi}
+}
+\description{
+  Equation 3.24 - page 64
+}
+\details{
+  No details.
+}
+

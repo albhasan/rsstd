@@ -1,0 +1,24 @@
+\name{eq3.025.alpha_t}
+\alias{eq3.025.alpha_t}
+\title{General solution re-written}
+\usage{
+  eq3.025.alpha_t(c_1, z_1, t, phi, psi)
+}
+\arguments{
+  \item{c_1}{c_1}
+
+  \item{z_1}{z_1}
+
+  \item{t}{t}
+
+  \item{phi}{phi}
+
+  \item{psi}{psi}
+}
+\description{
+  Equation 3.25 - page 64
+}
+\details{
+  No details.
+}
+

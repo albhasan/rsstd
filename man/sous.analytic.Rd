@@ -1,0 +1,26 @@
+\name{sous.analytic}
+\alias{sous.analytic}
+\title{Analytic solution of the second-order system}
+\usage{
+  sous.analytic(alpha_0, alpha_1, theta_1, theta_2,
+    iterations)
+}
+\arguments{
+  \item{alpha_0}{alpha_0}
+
+  \item{alpha_1}{alpha_1}
+
+  \item{theta_1}{theta_1}
+
+  \item{theta_2}{theta_2}
+
+  \item{iterations}{iterations}
+}
+\description{
+  Function for solving the second-order system on page 65.
+  This function does not iterate the whole time series.
+}
+\details{
+  No details.
+}
+

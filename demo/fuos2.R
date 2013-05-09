@@ -5,8 +5,8 @@
 #Figure 3.1
 #pg 62
 #----------------------------------------------------------
-alpha_t <- function(alpha_t_minus1){
-  eq3.011.alpha_t(theta_0 = 0, theta_1 = -.7, alpha_t.minus.1 = alpha_t_minus1)
+alpha_t <- function(alpha_t.minus.1){
+  eq3.011.alpha_t(theta_0 = 0, theta_1 = -.7, alpha_t.minus.1 = alpha_t.minus.1)
 }
 
 alpha_0 <- 12

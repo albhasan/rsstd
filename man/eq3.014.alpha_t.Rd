@@ -1,0 +1,23 @@
+\name{eq3.014.alpha_t}
+\alias{eq3.014.alpha_t}
+\title{Second-order linear discrete homogeneus dynamical system}
+\usage{
+  eq3.014.alpha_t(theta_1, theta_2, alpha_t.minus.1,
+    alpha_t.minus.2)
+}
+\arguments{
+  \item{theta_1}{theta_1}
+
+  \item{theta_2}{theta_2}
+
+  \item{alpha_t.minus.1}{alpha_t.minus.1}
+
+  \item{alpha_t.minus.2}{alpha_t.minus.2}
+}
+\description{
+  Equation 3.14 - page 62
+}
+\details{
+  No details.
+}
+
