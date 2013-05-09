@@ -12,10 +12,7 @@ alpha_t.fixed <- iterate.f1p(f = eq3.012.alpha_t, alpha_0 = alpha_0.fixedPoint, 
 alpha_t.decrease <- iterate.f1p(f = eq3.012.alpha_t, alpha_0 = alpha_0.lessThanFixedPoint, iterations = iterations)
 alpha_t.increase <- iterate.f1p(f = eq3.012.alpha_t, alpha_0 = alpha_0.moreThanFixedPoint, iterations = iterations)
 
-plot(0:(iterations-1), alpha_t.fixed, type = "l", col = "blue", lty = 1, lwd = 2.5, xaxs = "i", xlab = "Iterations", ylab = "Values", main = "(Not in the book)")
-lines(0:(iterations-1), alpha_t.decrease, col = "green", lty = 2, lwd = 2.5)
-lines(0:(iterations-1), alpha_t.increase, col = "red", lty = 2, lwd = 2.5)
-legend(0, 850, c("alpha_0 = fixed point","alpha_0 less than fixed point", "alpha_0 greater than fixed point"), lty = c(1,2,2), lwd = c(2.5,2.5,2.5), col = c("blue", "green", "red"))
-
-
-
+plot(x = 0:(iterations-1), y = alpha_t.fixed, type = "l", col = "blue", lty = 1, lwd = 2.5, xaxs = "i", xlab = "Iterations", ylab = "Values", main = "(Not in the book)")
+lines(x = 0:(iterations-1), y = alpha_t.decrease, col = "green", lty = 2, lwd = 2.5)
+lines(x = 0:(iterations-1), y = alpha_t.increase, col = "red", lty = 2, lwd = 2.5)
+legend(x = 0, y = 850, legend = c("alpha_0 = fixed point","alpha_0 less than fixed point", "alpha_0 greater than fixed point"), lty = c(1,2,2), lwd = c(2.5,2.5,2.5), col = c("blue", "green", "red"))
