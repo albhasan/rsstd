@@ -274,18 +274,6 @@ sous.noAnalytic <- function(f, alpha_0, alpha_1, iterations){
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 #' @title Analytic solution of the second-order system
 #'
 #' @description
@@ -333,4 +321,50 @@ sous.analytic <- function(alpha_0, alpha_1, theta_1, theta_2, iterations){
     print("CASE 2 not implemented")
   }
   return (alpha_t.vector)
+}
+
+
+#' @title Sensitivity matrix associated with the i-th latent root
+#'
+#' @description
+#' Equation 3.46 - page 69
+#'
+#' @details
+#' No details.
+#' 
+#' @param vhat_i vhat_i
+#' @param wapos_i wapos_i
+#' @param vapos_i vapos_i
+#' @param w_i w_i
+eq3.046.S_i <- function(vhat_i, wapos_i, vapos_i, w_i){
+  vhat_i %*% wapos_i / (vapos_i %*% w_i)
+}
+
+#' @title Utility function for calculating the sensitivity matrix associated (eq 3.46)
+#'
+#' @description
+#' No description
+#'
+#' @details
+#' No details.
+#' 
+#' @param M Matrix M
+#' @param delta Value used to change each element of M in order to estimate sensibility
+sensibilityMatrix <- function(M, delta){
+  sv <- svd(M)
+  S_i.matrix <- matrix(data = NA, nrow = nrow(M), ncol = ncol(M))
+  for(i in 1:nrow(M)){
+    for(j in 1:ncol(M)){
+      M.test <- M
+      M.test[i, j] <- M[i, j] - delta
+      sv.test <- svd(M.test)
+      w_1 <- sv$v[,j]#What column should be used?
+      v_1 <- sv$u[,j]
+      w_2 <- sv.test$v[,j]#What column should be used?
+      v_2 <- sv.test$u[,j]    
+      S_i <- eq3.046.S_i(Conj(v_1), w_2, v_2, w_1)
+      S_i.matrix[i, j] <- S_i
+    }
+  }
+  return (S_i.matrix)
 }

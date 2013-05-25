@@ -1,0 +1,19 @@
+\name{sensibilityMatrix}
+\alias{sensibilityMatrix}
+\title{Utility function for calculating the sensitivity matrix associated (eq 3.46)}
+\usage{
+  sensibilityMatrix(M, delta)
+}
+\arguments{
+  \item{M}{Matrix M}
+
+  \item{delta}{Value used to change each element of M in
+  order to estimate sensibility}
+}
+\description{
+  No description
+}
+\details{
+  No details.
+}
+

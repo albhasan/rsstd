@@ -1,3 +1,5 @@
+#require("testthat")
+
 #-----------------------------------------------------------
 #eq 3.11
 #-----------------------------------------------------------
@@ -27,4 +29,20 @@ expect_that(x[length(x)], equals(600))
 #-----------------------------------------------------------
 x <- eq3.012.alpha_t(alpha_t_minus1 = 600)
 expect_that(x, equals(600))
+#----------------------------------------------------------
+#eq 3.46
+#----------------------------------------------------------
+M <- matrix(c(1.1, 0.2, -0.2, 0.3, 1.0, 0.4, 0.2, -0.1, 0.9), ncol=3)
+#lamda_i <- eigen(M,FALSE,TRUE)$values
+delta <- 0.1# Not sure if this is the value. What about 2*pi/PHI
+S_i.list <- sensibilityMatrix(M, delta)
+
+S_1.res = matrix(c(0.56, 0.69, 0.11, 0.35, 0.42, 0.07, 0.06, 0.08, 0.01), nrow = 3)
+expect_that(S_i.list, equals(S_1.res))
+
+
+
+
+
+
 
