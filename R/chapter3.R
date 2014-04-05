@@ -61,30 +61,6 @@ eq3.011.equilibrium <- function(theta_0, theta_1){
 }
 
 
-#' @title Dummy for iterating a function that takes only one parameter (the previous result)
-#'
-#' @description
-#' No description.
-#'
-#' @details
-#' No details.
-#' 
-#' @param f function to iterate. It must be a function with one numeri input parameter and one numeric result (it uses the result of the last iteration as input for the next one)
-#' @param alpha_0 Initial value
-#' @param iterations Number of iterations
-iterate.f1p <- function(f, alpha_0, iterations){
-  res <- vector(mode = "numeric", length = iterations)
-  for(i in 1:iterations){
-    if(i == 1){
-      res[i] <- alpha_0
-    }else{
-      res[i] <- f(res[i - 1])
-    }
-  }
-  return (res)
-}
-
-
 #' @title Simple linear dynamical system
 #'
 #' @description
@@ -367,4 +343,75 @@ sensibilityMatrix <- function(M, delta){
     }
   }
   return (S_i.matrix)
+}
+
+
+#' @title Logistic equation or logistic dynamical system
+#'
+#' @description
+#' Equation 3.49 - page 71
+#'
+#' @details
+#' No details.
+#' 
+#' @param theta_0 theta_0
+#' @param theta_1 theta_1
+#' @param alpha_t.minus.1 alpha_t.minus.1
+eq3.049.alpha_t <- function(theta_0, theta_1, alpha_t.minus.1){
+  (1 + theta_1) * alpha_t.minus.1 - (theta_1/theta_0) * alpha_t.minus.1^2
+}
+
+
+
+
+
+
+
+
+#' @title Dummy for iterating a function that takes only one parameter (the previous result)
+#'
+#' @description
+#' No description.
+#'
+#' @details
+#' No details.
+#' 
+#' @param f function to iterate. It must be a function with one numeric input parameter and one numeric result (it uses the result of the last iteration as input for the next one)
+#' @param alpha_0 Initial value
+#' @param iterations Number of iterations
+iterate.f1p <- function(f, alpha_0, iterations){
+  res <- vector(mode = "numeric", length = iterations)
+  for(i in 1:iterations){
+    if(i == 1){
+      res[i] <- alpha_0
+    }else{
+      res[i] <- f(res[i - 1])
+    }
+  }
+  return (res)
+}
+
+#' @title Dummy for iterating a function that takes only two parameters and the previous result
+#'
+#' @description
+#' No description.
+#'
+#' @details
+#' No details.
+#' 
+#' @param f function to iterate. It must be a function with one numeri input parameter and one numeric result (it uses the result of the last iteration as input for the next one)
+#' @param alpha_0 Initial value
+#' @param theta_0 theta_0
+#' @param theta_1 theta_1
+#' @param iterations Number of iterations
+iterate.f3p <- function(f, alpha_0, theta_0, theta_1, iterations){
+  res <- vector(mode = "numeric", length = iterations)
+  for(i in 1:iterations){
+    if(i == 1){
+      res[i] <- alpha_0
+    }else{
+      res[i] <- f(theta_0, theta_1, res[i - 1])
+    }
+  }
+  return (res)
 }

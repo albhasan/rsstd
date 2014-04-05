@@ -6,7 +6,7 @@
 }
 \arguments{
   \item{f}{function to iterate. It must be a function with
-  one numeri input parameter and one numeric result (it
+  one numeric input parameter and one numeric result (it
   uses the result of the last iteration as input for the
   next one)}
 
