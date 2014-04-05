@@ -1,8 +1,1 @@
-Why should someone use this package?
 Spatial statistics is a complex topic and "Statistics for Spatio-Temporal Data" by Cressie and Wikle could be taken as a guide through this field. However, understanding the book is hard. This package is an attempt to help readers by providing R scripts which run the examples and figures in the book. In this way, the equations become functions which hopefully are easier to understand, at least for programmers.
-
-How does it compare to other existing solutions?
-No idea
-
-What are the main functions?
-None so far
