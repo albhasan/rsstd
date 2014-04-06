@@ -363,6 +363,56 @@ eq3.049.alpha_t <- function(theta_0, theta_1, alpha_t.minus.1){
 
 
 
+#' @title One parameter logistic equation
+#'
+#' @description
+#' Equation 3.50 - page 73
+#'
+#' @details
+#' No details.
+#' 
+#' @param alpha_t.minus.1 alpha_t.minus.1
+eq3.050.alpha_t <- function(alpha_t.minus.1){
+  alpha_t.minus.1 * (1 - alpha_t.minus.1)
+}
+
+
+#' @title One-parameter logistic equation equilibrium
+#'
+#' @description
+#' Equation in page 73 without a number
+#'
+#' @details
+#' No details.
+#' 
+#' @param theta theta
+eq3.050.equilibrium <- function(theta){
+    a0 <- 0
+    a1 <- (theta - 1)/theta 
+    return (c(a0, a1))
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
