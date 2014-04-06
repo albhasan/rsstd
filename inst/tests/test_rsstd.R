@@ -47,8 +47,18 @@ expect_that(x, equals(4.6))
 #----------------------------------------------------------
 #eq 3.50
 #----------------------------------------------------------
-x <- eq3.050.alpha_t()
-expect_that(x, equals())
+x <- eq3.050.alpha_t(4)
+expect_that(x, equals(-12))
+#----------------------------------------------------------
+#eq 3.51
+#----------------------------------------------------------
+x <- eq3.051.equilibrium(2.9)
+expect_that(x, equals(c(NaN, NaN)))
+x <- eq3.051.equilibrium(3)
+expect_that(x[1] > 0.666666, is_true())
+expect_that(x[1] < 0.666667, is_true())
+expect_that(x[2] > 0.666666, is_true())
+expect_that(x[2] < 0.666667, is_true())
 
 
 

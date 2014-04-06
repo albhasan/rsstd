@@ -362,7 +362,6 @@ eq3.049.alpha_t <- function(theta_0, theta_1, alpha_t.minus.1){
 }
 
 
-
 #' @title One parameter logistic equation
 #'
 #' @description
@@ -371,9 +370,10 @@ eq3.049.alpha_t <- function(theta_0, theta_1, alpha_t.minus.1){
 #' @details
 #' No details.
 #' 
+#' @param theta theta
 #' @param alpha_t.minus.1 alpha_t.minus.1
-eq3.050.alpha_t <- function(alpha_t.minus.1){
-  alpha_t.minus.1 * (1 - alpha_t.minus.1)
+eq3.050.alpha_t <- function(theta, alpha_t.minus.1){
+  theta * alpha_t.minus.1 * (1 - alpha_t.minus.1)
 }
 
 
@@ -393,6 +393,58 @@ eq3.050.equilibrium <- function(theta){
 }
 
 
+#' @title One-parameter logistic equation equilibrium
+#'
+#' @description
+#' Equation 3.51 - page 74
+#'
+#' @details
+#' No details.
+#' 
+#' @param theta theta
+eq3.051.equilibrium <- function(theta){
+  #Supress warning related to NaNs production
+  ow = options()$warn
+  options(warn = -1)
+  #Equation
+  a0 <- sqrt(theta + 1) * ((sqrt(theta + 1) - sqrt(theta - 3))/(2 * theta))
+  a1 <- sqrt(theta + 1) * ((sqrt(theta + 1) + sqrt(theta - 3))/(2 * theta))
+  #Restores the option
+  options(warn = ow)
+  #Return
+  return(c(a0, a1))
+}
+
+
+#' @title Simple two-dimensional nonlinear system (alpha)
+#'
+#' @description
+#' Equation 3.52 - page 76
+#'
+#' @details
+#' No details.
+#' 
+#' @param theta_1 theta_1
+#' @param theta_2 theta_2
+#' @param  alpha_t.minus.1 alpha_t.minus.1
+#' @param  beta_t.minus.1 beta_t.minus.1
+eq3.052.alpha_t <- function(alpha_t.minus.1, beta_t.minus.1, theta_1, theta_2){
+  1 + beta_t.minus.1 - theta_1 * alpha_t.minus.1^2
+}
+
+#' @title Simple two-dimensional nonlinear system (beta)
+#'
+#' @description
+#' Equation 3.53 - page 76
+#'
+#' @details
+#' No details.
+#' 
+#' @param theta_2 theta_2
+#' @param alpha_t.minus.1 alpha_t.minus.1
+eq3.053.beta_t <- function(alpha_t.minus.1, theta_2){
+  theta_2 * alpha_t.minus.1
+}
 
 
 
@@ -418,7 +470,24 @@ eq3.050.equilibrium <- function(theta){
 
 
 
-#' @title Dummy for iterating a function that takes only one parameter (the previous result)
+
+
+
+
+
+
+
+
+
+
+
+
+
+##################################################################################
+#UTIL
+##################################################################################
+
+#' @title Dummy for iterating a function that takes its previous result as a parameter with a single initial parameter
 #'
 #' @description
 #' No description.
@@ -426,22 +495,25 @@ eq3.050.equilibrium <- function(theta){
 #' @details
 #' No details.
 #' 
-#' @param f function to iterate. It must be a function with one numeric input parameter and one numeric result (it uses the result of the last iteration as input for the next one)
+#' @param f function to iterate. It must be a function with at least a numeric input parameter and one numeric result (it uses the result of the last iteration as input for the next one)
 #' @param alpha_0 Initial value
 #' @param iterations Number of iterations
-iterate.f1p <- function(f, alpha_0, iterations){
+#' @param ... Additional parameters for f
+iterate.generic <- function(f, alpha_0, iterations, ...){
   res <- vector(mode = "numeric", length = iterations)
   for(i in 1:iterations){
     if(i == 1){
       res[i] <- alpha_0
     }else{
-      res[i] <- f(res[i - 1])
+      res[i] <- f(alpha_t.minus.1 = res[i - 1], ...)
     }
   }
   return (res)
 }
 
-#' @title Dummy for iterating a function that takes only two parameters and the previous result
+
+
+#' @title Dummy for iterating a function that takes its previous result as a parameter with a single initial parameter
 #'
 #' @description
 #' No description.
@@ -449,19 +521,18 @@ iterate.f1p <- function(f, alpha_0, iterations){
 #' @details
 #' No details.
 #' 
-#' @param f function to iterate. It must be a function with one numeri input parameter and one numeric result (it uses the result of the last iteration as input for the next one)
-#' @param alpha_0 Initial value
-#' @param theta_0 theta_0
-#' @param theta_1 theta_1
-#' @param iterations Number of iterations
-iterate.f3p <- function(f, alpha_0, theta_0, theta_1, iterations){
-  res <- vector(mode = "numeric", length = iterations)
+#' @param 
+iterate.chaos <- function(alpha_0, beta_0, theta_1, theta_2, iterations){
+  alpha <- vector(mode = "numeric", length = iterations)
+  beta <- vector(mode = "numeric", length = iterations)
   for(i in 1:iterations){
     if(i == 1){
-      res[i] <- alpha_0
+      alpha[i] <- alpha_0
+      beta[i] <- beta_0
     }else{
-      res[i] <- f(theta_0, theta_1, res[i - 1])
+      beta[i] <- eq3.053.beta_t(alpha_t.minus.1 = alpha[i - 1], theta_2)
+      alpha[i] <- eq3.052.alpha_t(alpha_t.minus.1 = alpha[i - 1], beta_t.minus.1 = beta[i - 1], theta_1 = theta_1, theta_2 = theta_2)
     }
   }
-  return (res)
+  return (cbind(alpha, beta))
 }

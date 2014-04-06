@@ -1,0 +1,16 @@
+\name{eq3.051.equilibrium}
+\alias{eq3.051.equilibrium}
+\title{One-parameter logistic equation equilibrium}
+\usage{
+  eq3.051.equilibrium(theta)
+}
+\arguments{
+  \item{theta}{theta}
+}
+\description{
+  Equation 3.51 - page 74
+}
+\details{
+  No details.
+}
+
