@@ -1,0 +1,20 @@
+\name{iterate.ar1}
+\alias{iterate.ar1}
+\title{Dummy for iterating equation 3.77 on page 86 to get figure 3.14}
+\usage{
+  iterate.ar1(n, alpha, W_t.vector)
+}
+\arguments{
+  \item{n}{n}
+
+  \item{alpha}{alpha}
+
+  \item{W_t.vector}{W_t.vector}
+}
+\description{
+  No description.
+}
+\details{
+  No details.
+}
+

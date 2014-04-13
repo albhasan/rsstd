@@ -447,11 +447,98 @@ eq3.053.beta_t <- function(alpha_t.minus.1, theta_2){
 }
 
 
+#' @title Gaussian white noise
+#'
+#' @description
+#' Example on page 85
+#'
+#' @details
+#' No details.
+#' 
+#' @param n number of desired samples
+#' @param mean mean
+#' @param sd standard deviation
+whiteNoise.gaussian <- function(n, mean, sd){
+  rnorm(n = n, mean = mean, sd = sd)
+}
+
+#' @title Gaussian random walk
+#'
+#' @description
+#' Example on page 86
+#'
+#' @details
+#' No details.
+#' 
+#' @param n number of desired samples
+#' @param mean mean
+#' @param sd standard deviation
+randomWalk.gaussian <- function(n, mean, sd){
+  res <- vector(mode = "numeric", length = n - 1)
+  wng <- whiteNoise.gaussian(n = n, mean = mean, sd = sd)
+  for (i in 2:n){
+    res[i] <- res[i - 1] + wng[i]
+  }
+  return (res)
+}
+
+
+#' @title Random walk
+#'
+#' @description
+#' Example on page 86
+#'
+#' @details
+#' No details.
+#' 
+#' @param whiteNoise.vector whiteNoise.vector
+randomWalk <- function(whiteNoise.vector){
+  n <- length(whiteNoise.vector)
+  res <- vector(mode = "numeric", length = n - 1)
+  res[1] <- whiteNoise.vector[1]
+  for (i in 2:n){
+    res[i] <- res[i - 1] + whiteNoise.vector[i]
+  }
+  return (res)
+}
 
 
 
 
+#' @title Autoregressive process
+#'
+#' @description
+#' Equation 3.77 - page 86
+#'
+#' @details
+#' No details.
+#' 
+#' @param alpha_1 alpha_1
+#' @param Y_t.minus.1 Y_t.minus.1
+#' @param W_t W_t
+eq3.077.Y_t <- function(alpha_1, Y_t.minus.1, W_t){
+  alpha_1 * Y_t.minus.1 + W_t
+}
 
+
+#' @title Spectral density for the Autoregressive (1) process 
+#'
+#' @description
+#' Equation 3.81 - page 87
+#'
+#' @details
+#' No details.
+#' 
+#' @param omega omega
+#' @param var_w var_w
+#' @param alpha alpha
+eq3.081.f_of_omega <- function(omega, var_w, alpha){
+  if(omega > -0.5 & omega < 0.5){
+    squared_alpha <- alpha^2
+    res <- var_w/(1 - 2 * alpha * cos(2 * pi * omega) + squared_alpha)
+  }
+  return(res)
+}
 
 
 
@@ -542,57 +629,29 @@ iterate.chaos <- function(alpha_0, beta_0, theta_1, theta_2, iterations){
 }
 
 
-#' @title Gaussian white noise
+#' @title Dummy for iterating equation 3.77 on page 86 to get figure 3.14
 #'
 #' @description
-#' Example on page 85
+#' No description.
 #'
 #' @details
 #' No details.
 #' 
-#' @param n number of desired samples
-#' @param mean mean
-#' @param sd standard deviation
-whiteNoise.gaussian <- function(n, mean, sd){
-  rnorm(n = n, mean = mean, sd = sd)
-}
-
-#' @title Gaussian random walk
-#'
-#' @description
-#' Example on page 86
-#'
-#' @details
-#' No details.
-#' 
-#' @param n number of desired samples
-#' @param mean mean
-#' @param sd standard deviation
-randomWalk.gaussian <- function(n, mean, sd){
-  res <- vector(mode = "numeric", length = n - 1)
-  wng <- whiteNoise.gaussian(n = n, mean = mean, sd = sd)
-  for (i in 2:n){
-    res[i] <- res[i - 1] + wng[i]
+#' @param n n
+#' @param alpha alpha
+#' @param W_t.vector W_t.vector
+iterate.ar1 <- function(n, alpha, W_t.vector){
+  res <- vector(mode = "numeric", length = n)
+  if(length(W_t.vector) == n){
+    for(i in 1:n){
+      if(i > 1){
+        Y_t.minus.1 = res[i - 1]
+      }else{
+        Y_t.minus.1 = alpha
+      }
+      res[i] <- eq3.077.Y_t(alpha_1 = alpha, Y_t.minus.1 = Y_t.minus.1, W_t.vector[i])  
+    }
   }
-  return (res)
+  return(res)
 }
 
-
-#' @title Random walk
-#'
-#' @description
-#' Example on page 86
-#'
-#' @details
-#' No details.
-#' 
-#' @param whiteNoise.vector whiteNoise.vector
-randomWalk <- function(whiteNoise.vector){
-  n <- length(whiteNoise.vector)
-  res <- vector(mode = "numeric", length = n - 1)
-  res[1] <- whiteNoise.vector[1]
-  for (i in 2:n){
-    res[i] <- res[i - 1] + whiteNoise.vector[i]
-  }
-  return (res)
-}
