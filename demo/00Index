@@ -3,4 +3,7 @@ fuos2   First order univariate systems example page 61
 sous    Second order univariate system example page 65
 srfos   Spectral representation of the first-order system example page 70
 nldds   NonLinear discrete dynamical systems example page 72
-bif  Bifurcation examples page 73 and 74
+bif  Bifurcation examples pages 73, and 74
+chaos  Chaos examples pages 76, 77, and 78
+whitenoise   White noise example page 85
+randomwalk   Random walk example page 86

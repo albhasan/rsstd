@@ -521,7 +521,11 @@ iterate.generic <- function(f, alpha_0, iterations, ...){
 #' @details
 #' No details.
 #' 
-#' @param 
+#' @param alpha_0 alpha_0
+#' @param beta_0 beta_0
+#' @param theta_1 theta_1
+#' @param theta_2 theta_2
+#' @param iterations iterations
 iterate.chaos <- function(alpha_0, beta_0, theta_1, theta_2, iterations){
   alpha <- vector(mode = "numeric", length = iterations)
   beta <- vector(mode = "numeric", length = iterations)
@@ -535,4 +539,60 @@ iterate.chaos <- function(alpha_0, beta_0, theta_1, theta_2, iterations){
     }
   }
   return (cbind(alpha, beta))
+}
+
+
+#' @title Gaussian white noise
+#'
+#' @description
+#' Example on page 85
+#'
+#' @details
+#' No details.
+#' 
+#' @param n number of desired samples
+#' @param mean mean
+#' @param sd standard deviation
+whiteNoise.gaussian <- function(n, mean, sd){
+  rnorm(n = n, mean = mean, sd = sd)
+}
+
+#' @title Gaussian random walk
+#'
+#' @description
+#' Example on page 86
+#'
+#' @details
+#' No details.
+#' 
+#' @param n number of desired samples
+#' @param mean mean
+#' @param sd standard deviation
+randomWalk.gaussian <- function(n, mean, sd){
+  res <- vector(mode = "numeric", length = n - 1)
+  wng <- whiteNoise.gaussian(n = n, mean = mean, sd = sd)
+  for (i in 2:n){
+    res[i] <- res[i - 1] + wng[i]
+  }
+  return (res)
+}
+
+
+#' @title Random walk
+#'
+#' @description
+#' Example on page 86
+#'
+#' @details
+#' No details.
+#' 
+#' @param whiteNoise.vector whiteNoise.vector
+randomWalk <- function(whiteNoise.vector){
+  n <- length(whiteNoise.vector)
+  res <- vector(mode = "numeric", length = n - 1)
+  res[1] <- whiteNoise.vector[1]
+  for (i in 2:n){
+    res[i] <- res[i - 1] + whiteNoise.vector[i]
+  }
+  return (res)
 }

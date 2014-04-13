@@ -1,6 +1,6 @@
 \name{iterate.generic}
 \alias{iterate.generic}
-\title{Dummy for iterating a function that takes its previous result as a parameter}
+\title{Dummy for iterating a function that takes its previous result as a parameter with a single initial parameter}
 \usage{
   iterate.generic(f, alpha_0, iterations, ...)
 }
@@ -14,7 +14,7 @@
 
   \item{iterations}{Number of iterations}
 
-  \item{...}{Additional parameters for the function}
+  \item{...}{Additional parameters for f}
 }
 \description{
   No description.
