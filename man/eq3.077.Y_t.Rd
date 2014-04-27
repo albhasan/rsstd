@@ -1,6 +1,6 @@
 \name{eq3.077.Y_t}
 \alias{eq3.077.Y_t}
-\title{Autoregressive process}
+\title{Autoregressive (1) process}
 \usage{
   eq3.077.Y_t(alpha_1, Y_t.minus.1, W_t)
 }

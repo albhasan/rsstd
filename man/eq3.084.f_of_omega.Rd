@@ -1,0 +1,22 @@
+\name{eq3.084.f_of_omega}
+\alias{eq3.084.f_of_omega}
+\title{Spectral density of the Autoregressive (2) process}
+\usage{
+  eq3.084.f_of_omega(omega, var_w, alpha_1, alpha_2)
+}
+\arguments{
+  \item{omega}{omega}
+
+  \item{var_w}{var_w}
+
+  \item{alpha_1}{alpha_1}
+
+  \item{alpha_2}{alpha_2}
+}
+\description{
+  Equation 3.84 - page 89
+}
+\details{
+  No details.
+}
+

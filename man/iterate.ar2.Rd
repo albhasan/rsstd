@@ -7,9 +7,9 @@
 \arguments{
   \item{n}{n}
 
-  \item{alpha1}{alpha1}
+  \item{alpha_1}{alpha_1}
 
-  \item{alpha2}{alpha2}
+  \item{alpha_2}{alpha_2}
 
   \item{W_t.vector}{W_t.vector}
 }

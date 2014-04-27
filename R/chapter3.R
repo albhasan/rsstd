@@ -557,6 +557,24 @@ eq3.082.Y_t <- function(alpha_1, alpha_2, Y_t.minus.1, Y_t.minus.2, W_t){
 }
 
 
+#' @title Spectral density of the Autoregressive (2) process 
+#'
+#' @description
+#' Equation 3.84 - page 89
+#'
+#' @details
+#' No details.
+#' 
+#' @param omega omega
+#' @param var_w var_w
+#' @param alpha_1 alpha_1
+#' @param alpha_2 alpha_2
+eq3.084.f_of_omega <- function(omega, var_w, alpha_1, alpha_2){
+  if(omega > -0.5 & omega < 0.5){
+    res <- var_w/(1 + alpha_1^2 + alpha_2^2 - 2 * alpha_1 * (1 - alpha_2) * cos(2 * pi * omega) - 2 * alpha_2 * cos(4 * pi * omega))
+  }
+  return(res)
+}
 
 
 
@@ -679,8 +697,8 @@ iterate.ar1 <- function(n, alpha, W_t.vector){
 #' No details.
 #' 
 #' @param n n
-#' @param alpha1 alpha1
-#' @param alpha2 alpha2
+#' @param alpha_1 alpha_1
+#' @param alpha_2 alpha_2
 #' @param W_t.vector W_t.vector
 iterate.ar2 <- function(n, alpha_1, alpha_2, W_t.vector){
   res <- vector(mode = "numeric", length = n)
@@ -690,8 +708,8 @@ iterate.ar2 <- function(n, alpha_1, alpha_2, W_t.vector){
         Y_t.minus.1 = res[i - 1]
         Y_t.minus.2 = res[i - 2]
       }else{
-        Y_t.minus.1 = alpha1
-        Y_t.minus.2 = alpha2
+        Y_t.minus.1 = alpha_1
+        Y_t.minus.2 = alpha_2
       }
       res[i] <- eq3.082.Y_t(alpha_1 = alpha_1, alpha_2 = alpha_2, Y_t.minus.1 = Y_t.minus.1, Y_t.minus.2 = Y_t.minus.2, W_t = W_t.vector[i])
     }

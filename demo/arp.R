@@ -47,4 +47,9 @@ var_w <- 1
 time.vector <- seq(from = 1, to = n, by = 1)
 W_t.vector = rnorm(n = n, mean = 0, sd = sqrt(var_w))
 Y_t.vector <- iterate.ar2(n = n, alpha_1 = alpha_1, alpha_2 = alpha_2, W_t.vector = W_t.vector)
+
+spectralDensity <- sapply(X = frequency, eq3.084.f_of_omega, var_w = var_w, alpha_1 = alpha_1, alpha_2 = alpha_2)
+
 plot(x = time.vector, y = Y_t.vector, type = "l", col = "blue", xlab = "Time", ylab = "", main = "Figure 3.15a", lty = 1, lwd = 2.5, xaxs = "i")
+plot(x = frequency, y = spectralDensity, type = "l", col = "red", xlab = "Frequency", ylab = "", main = "Figure 3.15b", lty = 1, lwd = 2.5, xaxs = "i")
+
