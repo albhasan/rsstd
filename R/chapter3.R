@@ -387,9 +387,9 @@ eq3.050.alpha_t <- function(theta, alpha_t.minus.1){
 #' 
 #' @param theta theta
 eq3.050.equilibrium <- function(theta){
-    a0 <- 0
-    a1 <- (theta - 1)/theta 
-    return (c(a0, a1))
+  a0 <- 0
+  a1 <- (theta - 1)/theta 
+  return (c(a0, a1))
 }
 
 
@@ -503,9 +503,7 @@ randomWalk <- function(whiteNoise.vector){
 }
 
 
-
-
-#' @title Autoregressive process
+#' @title Autoregressive (1) process
 #'
 #' @description
 #' Equation 3.77 - page 86
@@ -541,6 +539,22 @@ eq3.081.f_of_omega <- function(omega, var_w, alpha){
 }
 
 
+#' @title Autoregressive (2) process
+#'
+#' @description
+#' Equation 3.82 - page 88
+#'
+#' @details
+#' No details.
+#' 
+#' @param alpha_1 alpha_1
+#' @param alpha_2 alpha_2
+#' @param Y_t.minus.1 Y_t.minus.1
+#' @param Y_t.minus.2 Y_t.minus.2
+#' @param W_t W_t
+eq3.082.Y_t <- function(alpha_1, alpha_2, Y_t.minus.1, Y_t.minus.2, W_t){
+  alpha_1 * Y_t.minus.1 + alpha_2 * Y_t.minus.2 + W_t
+}
 
 
 
@@ -655,3 +669,32 @@ iterate.ar1 <- function(n, alpha, W_t.vector){
   return(res)
 }
 
+
+#' @title Dummy for iterating equation 3.82 on page 90 to get figure 3.15
+#'
+#' @description
+#' No description.
+#'
+#' @details
+#' No details.
+#' 
+#' @param n n
+#' @param alpha1 alpha1
+#' @param alpha2 alpha2
+#' @param W_t.vector W_t.vector
+iterate.ar2 <- function(n, alpha_1, alpha_2, W_t.vector){
+  res <- vector(mode = "numeric", length = n)
+  if(length(W_t.vector) == n){
+    for(i in 2:n){
+      if(i > 2){
+        Y_t.minus.1 = res[i - 1]
+        Y_t.minus.2 = res[i - 2]
+      }else{
+        Y_t.minus.1 = alpha1
+        Y_t.minus.2 = alpha2
+      }
+      res[i] <- eq3.082.Y_t(alpha_1 = alpha_1, alpha_2 = alpha_2, Y_t.minus.1 = Y_t.minus.1, Y_t.minus.2 = Y_t.minus.2, W_t = W_t.vector[i])
+    }
+  }
+  return(res)
+}

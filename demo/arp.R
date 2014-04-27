@@ -22,7 +22,7 @@ plot(x = frequency, y = spectralDensity2, type = "l", col = "red", xlab = "Frequ
 n <- 100
 time.vector <- seq(from = 1, to = n, by = 1)
 alpha3 <- 1.01
-W_t.vector = rnorm(n = n, mean = 0, sd = 1)
+W_t.vector = rnorm(n = n, mean = 0, sd = sqrt(1))
 
 Y_t.vector1 <- iterate.ar1(n = n, alpha = alpha1, W_t.vector = W_t.vector)
 Y_t.vector2 <- iterate.ar1(n = n, alpha = alpha2, W_t.vector = W_t.vector)
@@ -31,6 +31,20 @@ Y_t.vector3 <- iterate.ar1(n = n, alpha = alpha3, W_t.vector = W_t.vector)
 plot(x = time.vector, y = Y_t.vector1, type = "l", col = "blue", xlab = "Time", ylab = "", main = "Figure 3.14a", lty = 1, lwd = 2.5, xaxs = "i")
 plot(x = time.vector, y = Y_t.vector2, type = "l", col = "blue", xlab = "Time", ylab = "", main = "Figure 3.14b", lty = 1, lwd = 2.5, xaxs = "i")
 plot(x = time.vector, y = Y_t.vector3, type = "l", col = "blue", xlab = "Time", ylab = "", main = "Figure 3.14c", lty = 1, lwd = 2.5, xaxs = "i")
+
 #eq3.077.Y_t(alpha_1, Y_t.minus.1, W_t)
 
 
+#----------------------------------------------------------
+#3.4.3 AUTOREGRESSIVE PROCESS
+#Figure 3.15
+#pg 90
+#----------------------------------------------------------
+n <- 100
+alpha_1 <- 0.4
+alpha_2 <- -0.5
+var_w <- 1
+time.vector <- seq(from = 1, to = n, by = 1)
+W_t.vector = rnorm(n = n, mean = 0, sd = sqrt(var_w))
+Y_t.vector <- iterate.ar2(n = n, alpha_1 = alpha_1, alpha_2 = alpha_2, W_t.vector = W_t.vector)
+plot(x = time.vector, y = Y_t.vector, type = "l", col = "blue", xlab = "Time", ylab = "", main = "Figure 3.15a", lty = 1, lwd = 2.5, xaxs = "i")
