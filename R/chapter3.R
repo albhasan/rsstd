@@ -577,6 +577,23 @@ eq3.084.f_of_omega <- function(omega, var_w, alpha_1, alpha_2){
 }
 
 
+#' @title Spectral density for Moving Average 1 MA(1) process
+#'
+#' @description
+#' Equation 3.92 - page 91
+#'
+#' @details
+#' No details.
+#' 
+#' @param omega omega
+#' @param var_w var_w
+#' @param beta beta
+eq3.092.f_of_omega <- function(omega, var_w, beta){
+  if(omega > -0.5 & omega < 0.5){
+    res <- var_w * (1 + beta^2 + (2 * beta * cos(2 * pi * omega)))
+  }
+  return(res)
+}
 
 
 
