@@ -577,12 +577,6 @@ eq3.084.f_of_omega <- function(omega, var_w, alpha_1, alpha_2){
 }
 
 
-
-
-
-
-
-
 #' @title Moving Average Process adapted for q = 1
 #'
 #' @description
@@ -591,11 +585,9 @@ eq3.084.f_of_omega <- function(omega, var_w, alpha_1, alpha_2){
 #' @details
 #' No details.
 #' 
-#' @param alpha_1 alpha_1
-#' @param alpha_2 alpha_2
-#' @param Y_t.minus.1 Y_t.minus.1
-#' @param Y_t.minus.2 Y_t.minus.2
 #' @param W_t W_t
+#' @param beta_1 beta_1
+#' @param W_tminus1 W_tminus1
 eq3.090.Y_t <- function(W_t, beta_1, W_tminus1){
   W_t + beta_1 * W_tminus1
 }
