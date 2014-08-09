@@ -577,6 +577,30 @@ eq3.084.f_of_omega <- function(omega, var_w, alpha_1, alpha_2){
 }
 
 
+
+
+
+
+
+
+#' @title Moving Average Process adapted for q = 1
+#'
+#' @description
+#' Equation 3.90 - page 91
+#'
+#' @details
+#' No details.
+#' 
+#' @param alpha_1 alpha_1
+#' @param alpha_2 alpha_2
+#' @param Y_t.minus.1 Y_t.minus.1
+#' @param Y_t.minus.2 Y_t.minus.2
+#' @param W_t W_t
+eq3.090.Y_t <- function(W_t, beta_1, W_tminus1){
+  W_t + beta_1 * W_tminus1
+}
+
+
 #' @title Spectral density for Moving Average 1 MA(1) process
 #'
 #' @description
@@ -729,6 +753,29 @@ iterate.ar2 <- function(n, alpha_1, alpha_2, W_t.vector){
         Y_t.minus.2 = alpha_2
       }
       res[i] <- eq3.082.Y_t(alpha_1 = alpha_1, alpha_2 = alpha_2, Y_t.minus.1 = Y_t.minus.1, Y_t.minus.2 = Y_t.minus.2, W_t = W_t.vector[i])
+    }
+  }
+  return(res)
+}
+
+
+#' @title Dummy for iterating equation 3.90 on page 91 to get figure 3.17
+#'
+#' @description
+#' No description.
+#'
+#' @details
+#' No details.
+#' 
+#' @param n n
+#' @param beta beta
+#' @param W_t.vector W_t.vector
+iterate.map1 <- function(n, beta, W_t.vector){
+  res <- vector(mode = "numeric", length = n)
+  if(length(W_t.vector) == n){
+    res[1] <- W_t.vector[1]
+    for(i in 2:n){
+      res[i] <- eq3.090.Y_t(W_t = W_t.vector[i], beta_1 = beta, W_tminus1 = W_t.vector[i - 1])
     }
   }
   return(res)
