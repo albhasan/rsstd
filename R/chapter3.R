@@ -612,14 +612,257 @@ eq3.092.f_of_omega <- function(omega, var_w, beta){
 }
 
 
+#' @title T Basis function phi a0 of t
+#'
+#' @description
+#' Equation 3.134 - page104
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+eq3.134.phi_a0_of_t <- function(T){
+  return(sqrt(1/T))
+}
+
+#' @title T Basis function phi ak of t
+#'
+#' @description
+#' Equation 3.135 - page104
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+#' @param t t
+#' @param k k
+eq3.135.phi_ak_of_t <- function(T, t, k){
+  return (sqrt(2/T) * cos(2 * pi * k * t/T))
+}
+
+
+#' @title T Basis function phi bk of t
+#'
+#' @description
+#' Equation 3.136 - page104
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+#' @param t t
+#' @param k k
+eq3.136.phi_bk_of_t <- function(T, t, k){
+  return (sqrt(2/T) * sin(2 * pi * k * t/T))
+}
+
+
+#' @title T Basis function phi a half T of t
+#'
+#' @description
+#' Equation 3.137 - page104
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+#' @param t t
+eq3.137.phi_aT2_of_t <- function(T, t){
+  return(sqrt(1/T) * cos(pi * T))
+}
+
+
+#' @title Example time series
+#'
+#' @description
+#' Equation 3.138 - page105
+#'
+#' @details
+#' No details.
+eq3.138.Y <- function(){
+  return(c(-0.0831, 0.7187, 0.2182, 0.3068, -0.9568, -0.4170))
+}
+
+
+#' @title T Basis function phi a0 of t
+#'
+#' @description
+#' Equation 3.139 - page105
+#'
+#' @details
+#' No details.
+#' 
+#' 
+eq3.139.phi_a0_of_t <- function(){
+  T <- 6
+  return(eq3.134.phi_a0_of_t(T))
+}
+
+
+#' @title T Basis function phi ak of t
+#'
+#' @description
+#' Equation 3.140 - page105
+#'
+#' @details
+#' No details.
+#' 
+#' @param t t
+eq3.140.phi_ak_of_t <- function(t){
+  T <- 6
+  k <- 1
+  return (eq3.135.phi_ak_of_t(T, t, k))
+}
+
+
+#' @title T Basis function phi bk of t
+#'
+#' @description
+#' Equation 3.141 - page105
+#'
+#' @details
+#' No details.
+#' 
+#' @param t t
+eq3.141.phi_bk_of_t <- function(t){
+  T <- 6
+  k <- 1
+  return (eq3.136.phi_bk_of_t(T, t, k))
+}
+
+
+#' @title T Basis function phi ak of t
+#'
+#' @description
+#' Equation 3.142 - page105
+#'
+#' @details
+#' No details.
+#' 
+#' @param t t
+eq3.142.phi_ak_of_t <- function(t){
+  T <- 6
+  k <- 2
+  return (eq3.135.phi_ak_of_t(T, t, k))
+}
+
+
+#' @title T Basis function phi bk of t
+#'
+#' @description
+#' Equation 3.143 - page105
+#'
+#' @details
+#' No details.
+#' 
+#' @param t t
+eq3.143.phi_bk_of_t <- function(t){
+  T <- 6
+  k <- 2
+  return (eq3.136.phi_bk_of_t(T, t, k))
+}
+
+
+#' @title T Basis function phi a half T of t
+#'
+#' @description
+#' Equation 3.144 - page105
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+#' @param t t
+eq3.144.phi_aT2_of_t <- function(T, t){
+  T <- 6
+  return (eq3.137.phi_aT2_of_t(T, t))
+}
+
+
+#' @title Matrix PHI
+#'
+#' @description
+#' Equation 3.145 - page106
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+#' @param t t
+eq3.145.PHI <- function(){
+  T <- 6
+  tVector <- seq(from = 1, to = 6, by = 1)
+  phi_a0 <- vector(mode = "numeric", length = T)
+  phi_a1 <- vector(mode = "numeric", length = T)
+  phi_a2 <- vector(mode = "numeric", length = T)
+  phi_a3 <- vector(mode = "numeric", length = T)
+  phi_b1 <- vector(mode = "numeric", length = T)
+  phi_b2 <- vector(mode = "numeric", length = T)
+  for (t in tVector){
+    phi_a0[t] <- eq3.139.phi_a0_of_t(t)
+    phi_a1[t] <- eq3.140.phi_ak_of_t(t)
+    phi_a2[t] <- eq3.142.phi_ak_of_t(t)
+    phi_a3[t] <- eq3.144.phi_aT2_of_t(T, t)
+    phi_b1[t] <- eq3.141.phi_bk_of_t(t)
+    phi_b2[t] <- eq3.143.phi_bk_of_t(t)
+  }
+  PHI <- cbind(phi_a0, phi_a1, phi_b1, phi_a2, phi_b2, phi_a3)
+  return(PHI)
+}
+
+
+#' @title alpha vector
+#'
+#' @description
+#' Equation 3.146 - page106
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+#' @param t t
+eq3.146.alpha <- function(){
+  PHI <- eq3.145.PHI()
+  y <- eq3.138.Y()
+  return(t(PHI) %*% y)
+}
 
 
 
+#' @title Amplitudes
+#'
+#' @description
+#' Equation 3.147 - page106
+#'
+#' @details
+#' No details.
+eq3.147.amplitudes <- function(){
+  alphaVector <- eq3.146.alpha()
+  A_0 <- alphaVector[1]
+  A_1 <- sqrt(alphaVector[2]^2 + alphaVector[3]^2)
+  A_2 <- sqrt(alphaVector[4]^2 + alphaVector[5]^2)
+  A_3 <- alphaVector[6]
+  return(c(A_0, A_1, A_2, A_3))
+}
 
 
-
-
-
+#' @title Filtered coeficients
+#'
+#' @description
+#' Equation 3.148 - page106
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+#' @param t t
+eq3.148.filteredAmplitudes <- function(){
+  alphaVector <- as.vector(eq3.146.alpha())
+  amplitudVector <- eq3.147.amplitudes()
+  newAmplitudVector <- c(amplitudVector[1], amplitudVector[2], amplitudVector[2], amplitudVector[3], amplitudVector[3], amplitudVector[4])
+  filtered_alphaVector <- alphaVector * as.numeric(newAmplitudVector > 0.5)
+  return(filtered_alphaVector)
+}
 
 
 
@@ -639,6 +882,7 @@ eq3.092.f_of_omega <- function(omega, var_w, beta){
 #UTIL
 ##################################################################################
 
+  
 #' @title Dummy for iterating a function that takes its previous result as a parameter with a single initial parameter
 #'
 #' @description
