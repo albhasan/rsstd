@@ -872,6 +872,42 @@ eq3.149.Y_R <- function(){
 }
 
 
+#' @title Cosine bell taper
+#'
+#' @description
+#' Equation 3.153 - page108
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+#' @param t t
+eq3.153.w_t <- function(T, t){
+  1/2 * (1 - cos(2 * pi * (t - 0.5)/T))
+}
+
+
+#' @title Moving average of the periogram
+#'
+#' @description
+#' Equation 3.154 - page108
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+#' @param t t
+eq3.154.fcircumflex_of_omega_k <- function(k, P){
+  j.vector <- seq(from = k - P, to = k + P, by = 1)
+  sigma <- 0
+  for(j in j.vector){
+    sigma <- sigma + dummy(j) 
+  }
+  fcircumflex_of_omega_k <- 1/(2 * P + 1) * sigma
+}
+dummy <- function(j){
+  
+}
 
 
 
@@ -892,7 +928,6 @@ eq3.149.Y_R <- function(){
 #UTIL
 ##################################################################################
 
-  
 #' @title Dummy for iterating a function that takes its previous result as a parameter with a single initial parameter
 #'
 #' @description
