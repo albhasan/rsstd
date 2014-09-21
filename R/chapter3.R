@@ -668,7 +668,7 @@ eq3.136.phi_bk_of_t <- function(T, t, k){
 #' @param T T
 #' @param t t
 eq3.137.phi_aT2_of_t <- function(T, t){
-  return(sqrt(1/T) * cos(pi * T))
+  return(sqrt(1/T) * cos(pi * t))
 }
 
 
@@ -786,9 +786,6 @@ eq3.144.phi_aT2_of_t <- function(T, t){
 #'
 #' @details
 #' No details.
-#' 
-#' @param T T
-#' @param t t
 eq3.145.PHI <- function(){
   T <- 6
   tVector <- seq(from = 1, to = 6, by = 1)
@@ -799,7 +796,7 @@ eq3.145.PHI <- function(){
   phi_b1 <- vector(mode = "numeric", length = T)
   phi_b2 <- vector(mode = "numeric", length = T)
   for (t in tVector){
-    phi_a0[t] <- eq3.139.phi_a0_of_t(t)
+    phi_a0[t] <- eq3.139.phi_a0_of_t()
     phi_a1[t] <- eq3.140.phi_ak_of_t(t)
     phi_a2[t] <- eq3.142.phi_ak_of_t(t)
     phi_a3[t] <- eq3.144.phi_aT2_of_t(T, t)
@@ -818,13 +815,11 @@ eq3.145.PHI <- function(){
 #'
 #' @details
 #' No details.
-#' 
-#' @param T T
-#' @param t t
 eq3.146.alpha <- function(){
   PHI <- eq3.145.PHI()
-  y <- eq3.138.Y()
-  return(t(PHI) %*% y)
+  y <- cbind(eq3.138.Y())
+  alpha <- t(PHI) %*% y
+  return(alpha)
 }
 
 
@@ -853,16 +848,31 @@ eq3.147.amplitudes <- function(){
 #'
 #' @details
 #' No details.
-#' 
-#' @param T T
-#' @param t t
-eq3.148.filteredAmplitudes <- function(){
+eq3.148.alpha_R <- function(){
   alphaVector <- as.vector(eq3.146.alpha())
   amplitudVector <- eq3.147.amplitudes()
   newAmplitudVector <- c(amplitudVector[1], amplitudVector[2], amplitudVector[2], amplitudVector[3], amplitudVector[3], amplitudVector[4])
   filtered_alphaVector <- alphaVector * as.numeric(newAmplitudVector > 0.5)
   return(filtered_alphaVector)
 }
+
+
+#' @title Filtered coeficients
+#'
+#' @description
+#' Equation 3.149 - page106
+#'
+#' @details
+#' No details.
+eq3.149.Y_R <- function(){
+  PHI <- eq3.145.PHI()
+  alpha_R <- eq3.148.alpha_R()
+  Y_R <- PHI %*% alpha_R
+  return(Y_R)
+}
+
+
+
 
 
 
