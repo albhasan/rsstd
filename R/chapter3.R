@@ -612,6 +612,75 @@ eq3.092.f_of_omega <- function(omega, var_w, beta){
 }
 
 
+
+#' @title Frequencies
+#'
+#' @description
+#' Equation 3.130 - page104
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+#' @param initial_k initial_k
+eq3.130.omega_k <- function(T, initial_k){
+  k.vector <- seq(from = initial_k, to = T/2, by = 1)
+  omega_k <- vector(mode = "numeric", length = 0)
+  for(k in k.vector){
+    omega_k <- append(x = omega_k, values = 2 * pi * k/T)
+  }
+  return(omega_k)
+}
+
+
+#' @title Basis function
+#'
+#' @description
+#' Equation 3.131 - page104
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+#' @param t t
+#' @param k k
+eq3.131.phi_k_of_t <- function(T, t, k){
+  sqrt(2/T) * (cos(2 * pi * k * t/T) + 1i * sin(2 * pi * k * t/T))
+}
+
+
+#' @title Basis function 0
+#'
+#' @description
+#' Equation 3.132 - page104
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+eq3.132.phi_0_of_t <- function(T){
+  sqrt(1/T)
+}
+
+
+#' @title Basis function T/"
+#'
+#' @description
+#' Equation 3.133 - page104
+#'
+#' @details
+#' No details.
+#' 
+#' @param T T
+#' @param t t
+eq3.133.phi_halfT_of_t <- function(T, t){
+  sqrt(1/T) * cos(pi * t)
+}
+
+
+
+
+
 #' @title T Basis function phi a0 of t
 #'
 #' @description
@@ -872,6 +941,50 @@ eq3.149.Y_R <- function(){
 }
 
 
+#' @title Complex Fourier basis function
+#'
+#' @description
+#' Equation 3.151 - page107
+#'
+#' @details
+#' No details.
+#' 
+#' @param k k
+#' @param Y Y
+eq3.151.alpha_of_omega_k <- function(k, Y){
+  T <- length(Y)
+  t.vector <- seq(from = 1, to = T, by = 1)
+  sum.vector <- unlist(mclapply(t.vector, .eq3.151.dummy, T = T, k = k, Y = Y))
+  sum(sum.vector)
+}
+.eq3.151.dummy <- function(t, T, k, Y){
+  if(k == 0){
+    phi_k <- eq3.132.phi_0_of_t(T)
+  }else if(k == T/2){
+    phi_k <- eq3.133.phi_halfT_of_t(T, t)
+  }else{
+    phi_k <- eq3.131.phi_k_of_t(T, t, k)
+  }
+  Y[t] * Conj(phi_k)
+}
+
+
+#' @title Periodogram
+#'
+#' @description
+#' Equation 3.152 - page107
+#'
+#' @details
+#' No details.
+#' 
+#' @param k k
+#' @param Y Y
+eq3.152.Icircumflex_of_omega_k <- function(k, Y){
+  alpha_of_omega_k <- eq3.151.alpha_of_omega_k(k, Y)
+  abs(alpha_of_omega_k)^2
+}
+
+
 #' @title Cosine bell taper
 #'
 #' @description
@@ -895,18 +1008,21 @@ eq3.153.w_t <- function(T, t){
 #' @details
 #' No details.
 #' 
-#' @param T T
-#' @param t t
-eq3.154.fcircumflex_of_omega_k <- function(k, P){
+#' @param k k
+#' @param P P
+#' @param Y Y
+eq3.154.fcircumflex_of_omega_k <- function(k, P, Y){
   j.vector <- seq(from = k - P, to = k + P, by = 1)
   sigma <- 0
+  T <- length(Y)
   for(j in j.vector){
-    sigma <- sigma + dummy(j) 
+    if(j >= 0 && j <= T/2){
+      Icircumflex_of_omega_k <- eq3.152.Icircumflex_of_omega_k(k, Y)
+      sigma <- sigma + Icircumflex_of_omega_k
+    }
   }
   fcircumflex_of_omega_k <- 1/(2 * P + 1) * sigma
-}
-dummy <- function(j){
-  
+  return(fcircumflex_of_omega_k)
 }
 
 
