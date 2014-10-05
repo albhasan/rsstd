@@ -13,8 +13,8 @@ NULL
 #' A dataset containing wind oobservations
 #' 
 #' \itemize{
-#'   \item u
-#'   \item v
+#'    \item u East-West component of the wind.
+#'    \item v North-South component of the wind.
 #' }
 #' 
 #' @docType data
@@ -1013,19 +1013,29 @@ eq3.153.w_t <- function(T, t){
 #' @param Y Y
 eq3.154.fcircumflex_of_omega_k <- function(k, P, Y){
   j.vector <- seq(from = k - P, to = k + P, by = 1)
-  sigma <- 0
   T <- length(Y)
-  for(j in j.vector){
-    if(j >= 0 && j <= T/2){
-      Icircumflex_of_omega_k <- eq3.152.Icircumflex_of_omega_k(k, Y)
-      sigma <- sigma + Icircumflex_of_omega_k
-    }
-  }
+  sum.vec <- unlist(mclapply(j.vector, .dummy.eq3.154.fcircumflex_of_omega_k, Y = Y))
+  sigma <- sum(sum.vec, na.rm = FALSE)
+  #sigma <- 0
+  
+  
+  #for(j in j.vector){
+  #  if(j >= 0 && j <= T/2){
+  #    Icircumflex_of_omega_k <- eq3.152.Icircumflex_of_omega_k(k, Y)
+  #    sigma <- sigma + Icircumflex_of_omega_k
+  #  }
+  #}
   fcircumflex_of_omega_k <- 1/(2 * P + 1) * sigma
   return(fcircumflex_of_omega_k)
 }
-
-
+.dummy.eq3.154.fcircumflex_of_omega_k <- function(j, Y){
+  res <- 0
+  # && j <= T/2){
+  if(j >= 0 && j <= T/2){
+    res <- eq3.152.Icircumflex_of_omega_k(k = j, Y = Y)
+  }
+  return(res)
+}
 
 
 
@@ -1177,3 +1187,65 @@ iterate.map1 <- function(n, beta, W_t.vector){
   }
   return(res)
 }
+
+
+#' @title Dummy for calculating a time series using an autoregressive model' from time series's coeficients
+#'
+#' @description
+#' No description.
+#'
+#' @details
+#' No details.
+#' 
+#' @param w.vector Vector of weigths
+#' @param ts.vector Time series
+ar.ts <- function(w.vector, ts.vector){
+  p <- length(w.vector)
+  t.vector <- seq(from = p + 1, to = length(ts.vector), by = 1)
+  unlist(mclapply(t.vector, .dummy.ar.ts, p = p, w.vector = w.vector, ts.vector = ts.vector))
+}
+.dummy.ar.ts <- function(t, p, w.vector, ts.vector){
+  sum(ts.vector[(t - p):(t - 1)] * w.vector, na.rm = FALSE)
+}
+
+
+#' @title Dummy for applying a cosine bell tapper
+#'
+#' @description
+#' No description.
+#'
+#' @details
+#' No details.
+#' 
+#' @param tapperSide percentage of data tappered on each side of the time series; i.e 0.1 for 10%
+#' @param timeseries Numeric vector representing the time series
+cosineballtapper <- function(timeseries, tapperSide){
+  lT <- length(timeseries)
+  pos.vec <- seq(from = 1, to = lT, by = 1)
+  w.vector <- unlist(mclapply(pos.vec, .dummy.cosinebelltapper, T = lT, tapperSide = tapperSide))
+  timeseries * w.vector
+}
+.dummy.cosinebelltapper <- function(pos, T, tapperSide){
+  res <- 1
+  if(pos < (T * tapperSide) || pos > T - (T * tapperSide)){
+    res <- eq3.153.w_t(T = T, t = pos)
+  }
+  return(res)
+}
+
+
+#' @title Dummy for subsetting a time series
+#'
+#' @description
+#' No description.
+#'
+#' @details
+#' No details.
+#' 
+#' @param timeseries Numeric vector representing the time series
+#' @param takeeach A number. Take an element from the time series each takeeach
+subsettimeseries <- function(timeseries, takeeach){
+  subset <- (1:length(timeseries)) %% takeeach == 0
+  subset(timeseries, subset = subset)
+}
+

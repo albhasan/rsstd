@@ -1,12 +1,12 @@
-fuos1   First order univariate systems example page 60
-fuos2   First order univariate systems example page 61
-sous    Second order univariate system example page 65
-srfos   Spectral representation of the first-order system example page 70
-nldds   NonLinear discrete dynamical systems example page 72
-bif  Bifurcation examples pages 73, and 74
-chaos  Chaos examples pages 76, 77, and 78
-whitenoise   White noise example page 85
-randomwalk   Random walk example page 86
-arp   Autoregressive process examples on pages 88, 89, and 90
-map   Moving average window examples on pages 92 and 93
-srotp  Spectral representation of temporal processes examples on page 105 and 106
+pg060_fuos1         First order univariate systems example page 60
+pg061-062_fuos2     First order univariate systems example page 61
+pg065_sous          Second order univariate system example page 65
+pg070_srfos         Spectral representation of the first-order system example page 70
+pg072_nldds         NonLinear discrete dynamical systems example page 72
+pg073-075_bif       Bifurcation examples pages 73, and 74
+pg076-078_chaos     Chaos examples pages 76, 77, and 78
+pg085_whitenoise    White noise example page 85
+pg086_randomwalk    Random walk example page 86
+pg088-090_arp       Autoregressive process examples on pages 88, 89, and 90
+pg092-093_map       Moving average window examples on pages 92 and 93
+pg105-110_srotp     Spectral representation of temporal processes examples on page 105 and 113
