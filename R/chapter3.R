@@ -1217,7 +1217,7 @@ ar.ts <- function(w.vector, ts.vector){
 #' @details
 #' No details.
 #' 
-#' @param tapperSide percentage of data tappered on each side of the time series; i.e 0.1 for 10%
+#' @param tapperSide percentage of data tappered on each side of the time series; i.e 0.1 for 10 percent
 #' @param timeseries Numeric vector representing the time series
 cosineballtapper <- function(timeseries, tapperSide){
   lT <- length(timeseries)
