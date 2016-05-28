@@ -87,5 +87,5 @@ gamma_Y_eq48_andHalf <- function(h, theta_1, theta_2, variance_0, variance_1){
 }
 
 gamma_Y <- sapply(h.vector, gamma_Y_eq48_andHalf, theta_1 = theta_1, theta_2 = theta_2, variance_0 = variance_0, variance_1 = variance_1)
-plot(x = h.vector[-1], y = gamma_Y[-1], type = "l", col = "blue", xlab = "h", ylab = "gamma_Y(h; theta)", main = "Figure 4.3", lty = 1, lwd = 2.5, xaxs = "i", ylim = c(0, 1), xlim = c(0, 10))
+plot(x = h.vector[-1], y = gamma_Y[-1], type = "l", col = "blue", xlab = "h", ylab = "gamma_Y(h; theta)", main = "Figure 4.4", lty = 1, lwd = 2.5, xaxs = "i", ylim = c(0, 1), xlim = c(0, 10))
 points(x = h.vector[1], y = gamma_Y[1], col = "blue", pch = 16)
